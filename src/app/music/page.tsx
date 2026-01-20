@@ -47,9 +47,11 @@ export default function MusicPage() {
           <div className="flex flex-col md:flex-row gap-8 items-center">
             {/* Album Art */}
             <div className="w-48 h-48 bg-owl-mist rounded-2xl overflow-hidden shadow-xl flex-shrink-0">
-              <div className="w-full h-full bg-gradient-to-br from-owl-water/30 to-owl-glow/30 flex items-center justify-center">
-                <span className="text-6xl">🎵</span>
-              </div>
+              <img 
+                src="https://owlsinwater-media.s3.us-east-2.amazonaws.com/images/skyline_drive_cover.png"
+                alt="Skyline Drive Album Cover"
+                className="w-full h-full object-cover"
+              />
             </div>
             
             {/* Track Info & Controls */}

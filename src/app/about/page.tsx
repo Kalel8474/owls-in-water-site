@@ -12,22 +12,67 @@ export default function AboutPage() {
             <h2 className="font-display text-3xl text-owl-glow mb-6">The Story</h2>
             
             <div className="prose prose-invert prose-lg max-w-none">
+
               <p className="text-owl-accent/80 leading-relaxed mb-6">
-                Owls in Water began as an experiment in blending the ethereal with the grounded, 
-                the nocturnal with the reflective. Our music lives in the space between waking 
-                and dreaming, where melodies ripple like moonlight on still water.
+                Owls in Water は、ルールを決めずに音楽を作る場所として始まりました。
               </p>
               
               <p className="text-owl-accent/80 leading-relaxed mb-6">
-                Each song is a story. Each note is an invitation to pause, reflect, and find 
-                something new in the familiar darkness. We believe music should move you—not 
-                just your body, but your thoughts, your memories, your sense of what's possible.
+                静かな夜に寄り添う曲もあれば、勢いだけで突き進むような曲もあります。
+                考え込むための音楽もあれば、ただ楽しむための音楽もある。私たちは、
+                その振れ幅を大切にしています。
+              </p>
+
+              <p className="text-owl-accent/80 leading-relaxed mb-6">
+                このプロジェクトの名前は、あるイメージから生まれました。
+                夜の生き物であるフクロウが、水面に映る自分の姿をふと見る瞬間。
+                意味を探すためではなく、ただ気づいて、また前に進むための一瞬。
+              </p>
+
+              <p className="text-owl-accent/80 leading-relaxed mb-6">
+                Owls in Water の音楽も、そんな距離感で生まれています。
+                正直であること。考えすぎないこと。
+                その時その時の感情や空気を、そのまま音にすること。
               </p>
               
               <p className="text-owl-accent/80 leading-relaxed">
-                Named for the paradox of creatures of the night meeting their reflection in 
-                water, we create soundscapes that embrace contradiction: heavy and light, 
-                ancient and modern, solitary and connected.
+                集中して聴いてもいいし、口ずさんでもいい。
+                何かを感じても、何も考えなくてもいい。
+                Owls in Water は、音と空気、そして好奇心のための音楽です。
+              </p>
+              <br />
+              <p className="text-owl-accent/80 leading-relaxed">
+                __________________________________________________________________________
+              </p>
+              <br />
+              <br />
+              <p className="text-owl-accent/80 leading-relaxed mb-6">
+                Owls in Water began as a place to make music without rules.
+              </p>
+              
+              <p className="text-owl-accent/80 leading-relaxed mb-6">
+                Some songs live in the quiet — late nights, passing lights, moments when you're 
+                thinking more than talking. Others are loud, messy, or just fun for the sake of it.
+                We like that contrast. We don't try to smooth it out.
+              </p>
+
+              <p className="text-owl-accent/80 leading-relaxed mb-6">
+                Our music moves between moods and moments: reflective, restless, playful, intense. 
+                Sometimes a song is about standing still. Sometimes it's about turning the volume up and seeing what happens.
+              </p>
+
+              <p className="text-owl-accent/80 leading-relaxed mb-6">
+                The name Owls in Water comes from an image we kept coming back to — a night creature 
+                catching its reflection, not to analyze it, just to notice it. A pause. A glance. Then moving on.
+              </p>
+
+              <p className="text-owl-accent/80 leading-relaxed mb-6">
+                That's how we approach music. Make something honest. Don't overthink it. Let it be what it is.
+              </p>
+              
+              <p className="text-owl-accent/80 leading-relaxed">
+                Owls in Water is about sound, atmosphere, and curiosity — whether you're listening closely, 
+                singing along, or just letting it play.
               </p>
             </div>
           </div>
@@ -66,7 +111,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-lg font-medium text-white mb-2">Living Art</h3>
               <p className="text-owl-accent/60 text-sm">
-                Every performance is unique. We embrace the moment and let 
+                Every album is unique. We embrace the moment and let 
                 the music breathe differently each time.
               </p>
             </div>
