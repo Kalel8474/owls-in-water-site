@@ -1,98 +1,33 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Repeat, Shuffle } from 'lucide-react'
-import { tracks, Track } from '@/data/tracks'
+import { tracks } from '@/data/tracks'
+import { useAudio } from '@/components/AudioProvider'
 
 export default function MusicPage() {
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [progress, setProgress] = useState(0)
-  const [duration, setDuration] = useState(0)
-  const [volume, setVolume] = useState(0.7)
-  const [isMuted, setIsMuted] = useState(false)
-  const [isRepeat, setIsRepeat] = useState(false)
-  const [isShuffle, setIsShuffle] = useState(false)
-  
-  const audioRef = useRef<HTMLAudioElement>(null)
-  
-  const currentTrack = tracks[currentTrackIndex]
-  
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = isMuted ? 0 : volume
-    }
-  }, [volume, isMuted])
-  
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-    
-    const updateProgress = () => {
-      setProgress(audio.currentTime)
-      setDuration(audio.duration || 0)
-    }
-    
-    const handleEnded = () => {
-      if (isRepeat) {
-        audio.currentTime = 0
-        audio.play()
-      } else {
-        playNext()
-      }
-    }
-    
-    audio.addEventListener('timeupdate', updateProgress)
-    audio.addEventListener('loadedmetadata', updateProgress)
-    audio.addEventListener('ended', handleEnded)
-    
-    return () => {
-      audio.removeEventListener('timeupdate', updateProgress)
-      audio.removeEventListener('loadedmetadata', updateProgress)
-      audio.removeEventListener('ended', handleEnded)
-    }
-  }, [currentTrackIndex, isRepeat])
-  
-  const togglePlay = () => {
-    if (!audioRef.current) return
-    
-    if (isPlaying) {
-      audioRef.current.pause()
-    } else {
-      audioRef.current.play()
-    }
-    setIsPlaying(!isPlaying)
-  }
-  
-  const playTrack = (index: number) => {
-    setCurrentTrackIndex(index)
-    setIsPlaying(true)
-    setTimeout(() => {
-      audioRef.current?.play()
-    }, 100)
-  }
-  
-  const playNext = () => {
-    if (isShuffle) {
-      const randomIndex = Math.floor(Math.random() * tracks.length)
-      playTrack(randomIndex)
-    } else {
-      const nextIndex = (currentTrackIndex + 1) % tracks.length
-      playTrack(nextIndex)
-    }
-  }
-  
-  const playPrev = () => {
-    const prevIndex = currentTrackIndex === 0 ? tracks.length - 1 : currentTrackIndex - 1
-    playTrack(prevIndex)
-  }
+  const {
+    currentTrackIndex,
+    isPlaying,
+    progress,
+    duration,
+    volume,
+    setVolume,
+    isMuted,
+    setIsMuted,
+    isRepeat,
+    setIsRepeat,
+    isShuffle,
+    setIsShuffle,
+    togglePlay,
+    playTrack,
+    playNext,
+    playPrev,
+    seek,
+    currentTrack,
+  } = useAudio()
   
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTime = parseFloat(e.target.value)
-    if (audioRef.current) {
-      audioRef.current.currentTime = newTime
-    }
-    setProgress(newTime)
+    seek(parseFloat(e.target.value))
   }
   
   const formatTime = (time: number) => {
@@ -245,9 +180,6 @@ export default function MusicPage() {
             ))}
           </div>
         </div>
-        
-        {/* Hidden Audio Element */}
-        <audio ref={audioRef} src={currentTrack.src} preload="metadata" />
       </div>
     </div>
   )

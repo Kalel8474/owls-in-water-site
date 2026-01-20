@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import { AudioProvider } from '@/components/AudioProvider'
+import MiniPlayer from '@/components/MiniPlayer'
 
 export const metadata: Metadata = {
   title: 'Owls in Water | Music',
@@ -17,11 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-body antialiased">
-        <Navigation />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
+        <AudioProvider>
+          <Navigation />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <MiniPlayer />
+          <Footer />
+        </AudioProvider>
       </body>
     </html>
   )
