@@ -62,10 +62,11 @@ export default function Home() {
           
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="aspect-square bg-owl-slate rounded-2xl overflow-hidden shadow-2xl">
-              {/* Album art placeholder */}
-              <div className="w-full h-full bg-gradient-to-br from-owl-water/20 to-owl-glow/20 flex items-center justify-center">
-                <span className="text-6xl">🦉</span>
-              </div>
+              <img 
+                src="https://owlsinwater-media.s3.us-east-2.amazonaws.com/images/skyline_drive_cover.png"
+                alt="Skyline Drive Album Cover"
+                className="w-full h-full object-cover"
+              />
             </div>
             
             <div>

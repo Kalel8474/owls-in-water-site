@@ -21,13 +21,14 @@ export default function MembersPage() {
             <button
               key={member.id}
               onClick={() => setSelectedMember(member)}
-              className="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-owl-slate border border-owl-water/20 hover:border-owl-glow/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-owl-water/20"
+              className="group relative aspect-[2/3] rounded-2xl overflow-hidden bg-owl-slate border border-owl-water/20 hover:border-owl-glow/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-owl-water/20"
             >
               {/* Member Image */}
-              <div className="absolute inset-0 bg-gradient-to-br from-owl-water/20 to-owl-glow/20 flex items-center justify-center">
-                {/* Placeholder - replace with actual image */}
-                <span className="text-6xl opacity-50">👤</span>
-              </div>
+              <img 
+                src={member.image}
+                alt={member.name}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
               
               {/* Hover Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-owl-dark via-owl-dark/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
@@ -57,8 +58,12 @@ export default function MembersPage() {
             </button>
             
             {/* Member Image Header */}
-            <div className="h-48 bg-gradient-to-br from-owl-water/30 to-owl-glow/30 rounded-t-3xl flex items-center justify-center flex-shrink-0">
-              <span className="text-8xl opacity-50">👤</span>
+            <div className="h-48 rounded-t-3xl overflow-hidden flex-shrink-0">
+              <img 
+                src={selectedMember.image}
+                alt={selectedMember.name}
+                className="w-full h-full object-cover object-top"
+              />
             </div>
             
             {/* Scrollable Content */}

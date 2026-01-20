@@ -42,13 +42,11 @@ export default function PhotosPage() {
               onClick={() => openLightbox(photo, index)}
             >
               <div className="relative overflow-hidden rounded-xl bg-owl-slate">
-                {/* Placeholder - replace with actual images */}
-                <div 
-                  className="aspect-[4/3] bg-gradient-to-br from-owl-water/20 to-owl-glow/20 flex items-center justify-center"
-                  style={{ aspectRatio: photo.aspectRatio || '4/3' }}
-                >
-                  <span className="text-4xl opacity-50">📷</span>
-                </div>
+                <img 
+                  src={photo.src}
+                  alt={photo.title}
+                  className="w-full h-auto object-cover"
+                />
                 
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-owl-dark/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
@@ -82,11 +80,12 @@ export default function PhotosPage() {
             <ChevronLeft className="w-10 h-10" />
           </button>
           
-          <div className="max-w-4xl max-h-[80vh] mx-16">
-            {/* Placeholder - replace with actual image */}
-            <div className="bg-owl-slate rounded-xl aspect-video flex items-center justify-center">
-              <span className="text-8xl opacity-50">📷</span>
-            </div>
+          <div className="max-w-4xl max-h-[80vh] mx-16 flex flex-col items-center">
+            <img 
+              src={selectedPhoto.src}
+              alt={selectedPhoto.title}
+              className="max-h-[65vh] w-auto rounded-xl object-contain"
+            />
             <div className="text-center mt-6">
               <h3 className="text-xl text-white">{selectedPhoto.title}</h3>
               {selectedPhoto.caption && (

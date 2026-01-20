@@ -17,7 +17,7 @@ export const photos: Photo[] = [
   },
   {
     id: '2',
-    title: 'This is where it\s made',
+    title: 'This is where it\'s made',
     caption: 'Ren builds the ocean. Minato finds the words to swim in it.',
     src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/images/this_is_where_its_made.png',
     aspectRatio: '3/2'
@@ -44,13 +44,13 @@ export const photos: Photo[] = [
   {
     id: '6',
     title: 'Before the noise arrives',
-    src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/before_the_noise_arrives.png',
+    src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/images/before_the_noise_arrives.png',
     aspectRatio: '2/3'
   },
   {
     id: '7',
     title: 'Kindness doesn\'t need an audience',
-    src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/kindness_doesnt_need_an_audience.png',
+    src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/images/kindness_doesnt_need_an_audience.png',
     aspectRatio: '2/3'
   },
 ]
