@@ -61,7 +61,7 @@ export default function Home() {
           </h2>
           
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="aspect-square bg-owl-slate rounded-2xl overflow-hidden shadow-2xl">
+            <div className="aspect-square bg-owl-slate rounded-2xl overflow-hidden shadow-2xl border border-owl-water/30">
               <img 
                 src="https://owlsinwater-media.s3.us-east-2.amazonaws.com/images/skyline_drive_cover.png"
                 alt="Skyline Drive Album Cover"
@@ -76,8 +76,12 @@ export default function Home() {
                 <br />
                 夜明けの気配から、その先へと続く――ひとつの流れとして紡がれた全10曲。
               </p>
+              <p className="text-owl-accent/80 leading-relaxed">
+                __________________________________________________________________________
+              </p>
+              <br />
               <p className="text-owl-accent/70 mb-6 leading-relaxed">
-                スカイラインドライブ (Skyline Drive) moves through the hours when the city softens.
+                Skyline Drive (スカイラインドライブ) moves through the hours when the city softens.
                 <br />
                 Ten tracks, one continuous arc—from first light to what comes after.
               </p>

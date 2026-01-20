@@ -9,12 +9,12 @@ export default function AboutPage() {
         {/* Band Story */}
         <section className="mb-20">
           <div className="bg-owl-slate/30 rounded-3xl p-8 md:p-12 border border-owl-water/10">
-            <h2 className="font-display text-3xl text-owl-glow mb-6">The Story</h2>
+            <h2 className="font-display text-3xl text-owl-glow mb-6">The Band's Story</h2>
             
             <div className="prose prose-invert prose-lg max-w-none">
 
               <p className="text-owl-accent/80 leading-relaxed mb-6">
-                Owls in Water は、ルールを決めずに音楽を作る場所として始まりました。
+                Owls in Water は、ルールに縛られず音楽を作るという想いから生まれた、四人組のバンドです。
               </p>
               
               <p className="text-owl-accent/80 leading-relaxed mb-6">
@@ -47,7 +47,7 @@ export default function AboutPage() {
               <br />
               <br />
               <p className="text-owl-accent/80 leading-relaxed mb-6">
-                Owls in Water began as a place to make music without rules.
+                Owls in Water is a four-person band formed around the idea of making music without rules.
               </p>
               
               <p className="text-owl-accent/80 leading-relaxed mb-6">
@@ -127,19 +127,97 @@ export default function AboutPage() {
               <time className="text-owl-water text-sm">January 2026</time>
               <h3 className="text-xl text-white mt-2 mb-3">New Year, New Sounds</h3>
               <p className="text-owl-accent/70">
-                We've been deep in the studio working on something special. 
-                The new material explores themes of renewal and the quiet power 
-                of starting fresh. More details coming soon.
+                スカイラインドライブ（Skyline Drive）がリリースされました。
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                このアルバムは、夜遅くに少しずつ形になっていった作品です。
+                街が時間とともに表情を変えていく中を、最初の灯りから、その先へと進んでいく——
+                はっきりした答えというより、ひとつひとつの“瞬間”を集めたような音楽です。
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                静かな道を走る時間、言い終えなかった会話、
+                周りが静かになったときにだけ浮かんでくる考えごと。
+                そんな夜の気配を、そのまま音にしました。
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                それぞれの曲は単独でも聴けますが、
+                全体としては一つの流れになるように作っています。
+                10曲、ひと続きの夜。
+                考えさせる曲もあれば、落ち着かない曲、
+                理由はいらず、ただ感じてほしい曲もあります。
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                いつも聴いてくれて、シェアしてくれて、
+                この音楽と時間を過ごしてくれて、本当にありがとう。
+                この作品がたどり着いた場所を、私たちは気に入っています。
+                そして、ここまで一緒に来てくれたことに感謝しています。
+              </p>
+              <br />
+              <p className="text-owl-accent/80 leading-relaxed">
+                __________________________________________________________________________
+              </p>
+              <br />
+              <br />
+              <p className="text-owl-accent/70">
+                Skyline Drive (スカイラインドライブ) is out now.
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                This album came together late at night, moving through the city 
+                hour by hour — from first lights to whatever comes after. 
+                It's a collection of moments rather than statements: 
+                rides through empty streets, conversations you don't quite finish, 
+                thoughts that only show up when things get quiet.
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                Each track stands on its own, but they were written to be heard 
+                as a single arc. Ten songs, one continuous night. Some are reflective, 
+                some restless, some simply there to be felt rather than explained.
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                Thank you to everyone who has been listening, sharing, and spending 
+                time with our music. We're proud of where this one landed — 
+                and grateful you're here for the ride.
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                OiW 
               </p>
             </article>
             
             <article className="bg-owl-slate/20 rounded-2xl p-6 border border-owl-water/10">
               <time className="text-owl-water text-sm">December 2025</time>
-              <h3 className="text-xl text-white mt-2 mb-3">Thank You</h3>
+              <h3 className="text-xl text-white mt-2 mb-3">ありがとう (Thank You)</h3>
+              <p className="text-owl-accent/70">
+                この一年、私たちの音楽を聴いて、
+                誰かに勧めて、つながってくれたすべての人へ——
+                本当にありがとう。
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                あなたたちの存在が、私たちにとってすべてです。
+                これからも、夜の途中で出会う瞬間を一緒に。
+              </p>
+              <br />
+              <p className="text-owl-accent/80 leading-relaxed">
+                __________________________________________________________________________
+              </p>
+              <br />
+              <br />
               <p className="text-owl-accent/70">
                 To everyone who listened, shared, and connected with our music 
                 this year—thank you. Your support means everything. Here's to 
                 more midnight moments together.
+              </p>
+              <br />
+              <p className="text-owl-accent/70">
+                OiW 
               </p>
             </article>
           </div>

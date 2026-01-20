@@ -49,7 +49,7 @@ export const photos: Photo[] = [
   },
   {
     id: '7',
-    title: 'Kindness doesn\'t need an audience',
+    title: 'After everyone went home',
     src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/images/kindness_doesnt_need_an_audience.png',
     aspectRatio: '2/3'
   },
