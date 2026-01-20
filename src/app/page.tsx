@@ -69,11 +69,16 @@ export default function Home() {
             </div>
             
             <div>
-              <h3 className="font-display text-3xl mb-4 text-white">Album Title</h3>
+              <h3 className="font-display text-3xl mb-4 text-white">スカイラインドライブ (Skyline Drive)</h3>
+              <p className="text-owl-accent/70 mb-4 leading-relaxed">
+                スカイラインドライブ（Skyline Drive）は、街の輪郭が静かにほどけていく時間帯をたどる作品。
+                <br />
+                夜明けの気配から、その先へと続く――ひとつの流れとして紡がれた全10曲。
+              </p>
               <p className="text-owl-accent/70 mb-6 leading-relaxed">
-                A journey through soundscapes where nocturnal wisdom meets flowing waters. 
-                Each track tells a story of reflection, discovery, and the quiet moments 
-                that define us.
+                スカイラインドライブ (Skyline Drive) moves through the hours when the city softens.
+                <br />
+                Ten tracks, one continuous arc—from first light to what comes after.
               </p>
               <Link
                 href="/music"
