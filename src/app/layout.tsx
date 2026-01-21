@@ -25,7 +25,9 @@ export default function RootLayout({
             {children}
           </main>
           <MiniPlayer />
-          <Footer />
+          <div className="pb-20">
+            <Footer />
+          </div>
         </AudioProvider>
       </body>
     </html>

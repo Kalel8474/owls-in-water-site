@@ -43,7 +43,7 @@ export const photos: Photo[] = [
   },
   {
     id: '6',
-    title: 'Before the noise arrives',
+    title: 'Unbothered',
     src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/images/before_the_noise_arrives.png',
     aspectRatio: '2/3'
   },

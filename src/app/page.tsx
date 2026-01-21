@@ -17,15 +17,11 @@ export default function Home() {
         
         {/* Content */}
         <div className="relative z-10 text-center px-6">
-          <h1 className="font-display text-6xl md:text-8xl font-bold mb-6 tracking-tight">
+          <h1 className="font-display text-6xl md:text-8xl font-bold mb-28 tracking-tight">
             <span className="text-white">Owls</span>
             <span className="text-owl-water"> in </span>
             <span className="text-owl-glow">Water</span>
           </h1>
-          
-          <p className="text-owl-accent/80 text-xl md:text-2xl mb-12 max-w-2xl mx-auto font-light">
-            Where melodies meet the midnight tide
-          </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

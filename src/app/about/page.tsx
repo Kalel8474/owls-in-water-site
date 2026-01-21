@@ -14,7 +14,7 @@ export default function AboutPage() {
             <div className="prose prose-invert prose-lg max-w-none">
 
               <p className="text-owl-accent/80 leading-relaxed mb-6">
-                Owls in Water は、ルールに縛られず音楽を作るという想いから生まれた、四人組のバンドです。
+                Owls in Water は、ルールに縛られず音楽を作るという想いから生まれた、4人編成のバンドです。
               </p>
               
               <p className="text-owl-accent/80 leading-relaxed mb-6">
@@ -42,7 +42,7 @@ export default function AboutPage() {
               </p>
               <div className="border-t border-owl-water/30 my-6"></div>
               <p className="text-owl-accent/80 leading-relaxed mb-6">
-                Owls in Water is a four-person band formed around the idea of making music without rules.
+                Owls in Water is a four-member band formed around the idea of making music without rules.
               </p>
               
               <p className="text-owl-accent/80 leading-relaxed mb-6">
