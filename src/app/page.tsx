@@ -76,10 +76,7 @@ export default function Home() {
                 <br />
                 夜明けの気配から、その先へと続く――ひとつの流れとして紡がれた全10曲。
               </p>
-              <p className="text-owl-accent/80 leading-relaxed">
-                __________________________________________________________________________
-              </p>
-              <br />
+              <div className="border-t border-owl-water/30 my-6"></div>
               <p className="text-owl-accent/70 mb-6 leading-relaxed">
                 Skyline Drive (スカイラインドライブ) moves through the hours when the city softens.
                 <br />
