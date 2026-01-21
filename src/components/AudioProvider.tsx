@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useRef, useEffect, ReactNode } from 'react'
-import { tracks, Track } from '@/data/tracks'
+import { tracks, Track } from '@/data/albums/skyline-drive'
 
 interface AudioContextType {
   currentTrackIndex: number

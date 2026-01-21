@@ -40,12 +40,7 @@ export default function AboutPage() {
                 何かを感じても、何も考えなくてもいい。
                 Owls in Water は、音と空気、そして好奇心のための音楽です。
               </p>
-              <br />
-              <p className="text-owl-accent/80 leading-relaxed">
-                __________________________________________________________________________
-              </p>
-              <br />
-              <br />
+              <div className="border-t border-owl-water/30 my-6"></div>
               <p className="text-owl-accent/80 leading-relaxed mb-6">
                 Owls in Water is a four-person band formed around the idea of making music without rules.
               </p>
@@ -156,12 +151,7 @@ export default function AboutPage() {
                 この作品がたどり着いた場所を、私たちは気に入っています。
                 そして、ここまで一緒に来てくれたことに感謝しています。
               </p>
-              <br />
-              <p className="text-owl-accent/80 leading-relaxed">
-                __________________________________________________________________________
-              </p>
-              <br />
-              <br />
+              <div className="border-t border-owl-water/30 my-6"></div>
               <p className="text-owl-accent/70">
                 Skyline Drive (スカイラインドライブ) is out now.
               </p>
@@ -204,12 +194,7 @@ export default function AboutPage() {
                 あなたたちの存在が、私たちにとってすべてです。
                 これからも、夜の途中で出会う瞬間を一緒に。
               </p>
-              <br />
-              <p className="text-owl-accent/80 leading-relaxed">
-                __________________________________________________________________________
-              </p>
-              <br />
-              <br />
+              <div className="border-t border-owl-water/30 my-6"></div>
               <p className="text-owl-accent/70">
                 To everyone who listened, shared, and connected with our music 
                 this year—thank you. Your support means everything. Here's to 
