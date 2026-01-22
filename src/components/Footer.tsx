@@ -12,7 +12,7 @@ export default function Footer() {
               Owls in Water
             </Link>
             <p className="text-owl-accent/60 mt-3 text-sm">
-              Where melodies meet the midnight tide.
+              In it together.
             </p>
           </div>
           
