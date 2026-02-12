@@ -3,6 +3,42 @@
 import { createContext, useContext, useState, useRef, useEffect, ReactNode } from 'react'
 import { tracks, Track } from '@/data/albums/skyline-drive'
 
+// GA tracking helper
+const trackEvent = (eventName: string, params: Record<string, any> = {}) => {
+  if (typeof window !== 'undefined' && (window as any).gtag) {
+    (window as any).gtag('event', eventName, params)
+  }
+}
+
+// Check if returning listener (visited before)
+const checkReturningListener = () => {
+  if (typeof window === 'undefined') return false
+  const lastVisit = localStorage.getItem('oiw_last_visit')
+  const now = Date.now()
+  localStorage.setItem('oiw_last_visit', now.toString())
+  
+  if (lastVisit) {
+    const daysSinceLastVisit = (now - parseInt(lastVisit)) / (1000 * 60 * 60 * 24)
+    return daysSinceLastVisit > 1 // Returning if more than 1 day
+  }
+  return false
+}
+
+// Track repeat plays of same song
+const getPlayHistory = (): Record<string, number> => {
+  if (typeof window === 'undefined') return {}
+  const history = localStorage.getItem('oiw_play_history')
+  return history ? JSON.parse(history) : {}
+}
+
+const recordPlay = (trackTitle: string) => {
+  if (typeof window === 'undefined') return 0
+  const history = getPlayHistory()
+  history[trackTitle] = (history[trackTitle] || 0) + 1
+  localStorage.setItem('oiw_play_history', JSON.stringify(history))
+  return history[trackTitle]
+}
+
 interface AudioContextType {
   currentTrackIndex: number
   setCurrentTrackIndex: (index: number) => void
@@ -44,9 +80,23 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const [isRepeat, setIsRepeat] = useState(false)
   const [isShuffle, setIsShuffle] = useState(false)
   
+  // GA tracking state
+  const [halfwaySent, setHalfwaySent] = useState(false)
+  const [hasTrackedPlay, setHasTrackedPlay] = useState(false)
+  const [sessionTracksCompleted, setSessionTracksCompleted] = useState<Set<number>>(new Set())
+  
   const audioRef = useRef<HTMLAudioElement | null>(null)
   
   const currentTrack = tracks[currentTrackIndex]
+  
+  // Check for returning listener on mount
+  useEffect(() => {
+    if (checkReturningListener()) {
+      trackEvent('return_listener', {
+        album: 'Skyline Drive'
+      })
+    }
+  }, [])
   
   useEffect(() => {
     if (!audioRef.current) {
@@ -55,6 +105,10 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     const audio = audioRef.current
     audio.src = currentTrack.src
     audio.volume = isMuted ? 0 : volume
+    
+    // Reset tracking flags for new track
+    setHalfwaySent(false)
+    setHasTrackedPlay(false)
     
     if (isPlaying) {
       audio.play()
@@ -76,12 +130,59 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     const updateProgress = () => {
       setProgress(audio.currentTime)
       setDuration(audio.duration || 0)
+      
+      // Track 50% milestone
+      if (audio.duration > 0) {
+        const percent = (audio.currentTime / audio.duration) * 100
+        if (percent >= 50 && !halfwaySent) {
+          setHalfwaySent(true)
+          trackEvent('track_50_percent', {
+            track_name: currentTrack.title,
+            track_number: currentTrackIndex + 1,
+            album: 'Skyline Drive'
+          })
+        }
+      }
     }
     
     const handleEnded = () => {
+      // Track completion
+      trackEvent('track_complete', {
+        track_name: currentTrack.title,
+        track_number: currentTrackIndex + 1,
+        album: 'Skyline Drive'
+      })
+      
+      // Track album completion (last track)
+      const newCompleted = new Set(sessionTracksCompleted)
+      newCompleted.add(currentTrackIndex)
+      setSessionTracksCompleted(newCompleted)
+      
+      // Check if all tracks have been completed this session
+      if (newCompleted.size === tracks.length) {
+        trackEvent('album_complete', {
+          album: 'Skyline Drive',
+          track_count: tracks.length
+        })
+      }
+      
+      // Check if this is the last track (linear album completion)
+      if (currentTrackIndex === tracks.length - 1 && !isShuffle) {
+        trackEvent('album_complete', {
+          album: 'Skyline Drive',
+          completion_type: 'sequential'
+        })
+      }
+      
       if (isRepeat) {
         audio.currentTime = 0
         audio.play()
+        // Track replay
+        trackEvent('track_replay', {
+          track_name: currentTrack.title,
+          track_number: currentTrackIndex + 1,
+          album: 'Skyline Drive'
+        })
       } else {
         playNext()
       }
@@ -96,7 +197,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       audio.removeEventListener('loadedmetadata', updateProgress)
       audio.removeEventListener('ended', handleEnded)
     }
-  }, [currentTrackIndex, isRepeat, isShuffle])
+  }, [currentTrackIndex, isRepeat, isShuffle, halfwaySent, currentTrack, sessionTracksCompleted])
   
   const togglePlay = () => {
     if (!audioRef.current) return
@@ -104,6 +205,29 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       audioRef.current.pause()
     } else {
       audioRef.current.play()
+      
+      // Track play event (only once per track load)
+      if (!hasTrackedPlay) {
+        setHasTrackedPlay(true)
+        const playCount = recordPlay(currentTrack.title)
+        
+        trackEvent('track_play', {
+          track_name: currentTrack.title,
+          track_number: currentTrackIndex + 1,
+          album: 'Skyline Drive',
+          play_count: playCount
+        })
+        
+        // Track repeat listens (same song played before)
+        if (playCount > 1) {
+          trackEvent('repeat_track_play', {
+            track_name: currentTrack.title,
+            track_number: currentTrackIndex + 1,
+            album: 'Skyline Drive',
+            total_plays: playCount
+          })
+        }
+      }
     }
     setIsPlaying(!isPlaying)
   }
@@ -111,6 +235,36 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const playTrack = (index: number) => {
     setCurrentTrackIndex(index)
     setIsPlaying(true)
+    
+    // Track play event
+    const track = tracks[index]
+    const playCount = recordPlay(track.title)
+    
+    trackEvent('track_play', {
+      track_name: track.title,
+      track_number: index + 1,
+      album: 'Skyline Drive',
+      play_count: playCount,
+      source: 'direct_select'
+    })
+    
+    // Track repeat listens
+    if (playCount > 1) {
+      trackEvent('repeat_track_play', {
+        track_name: track.title,
+        track_number: index + 1,
+        album: 'Skyline Drive',
+        total_plays: playCount
+      })
+    }
+    
+    // Track if starting from beginning (playlist start)
+    if (index === 0) {
+      trackEvent('playlist_start', {
+        album: 'Skyline Drive'
+      })
+    }
+    
     setTimeout(() => {
       audioRef.current?.play()
     }, 100)
