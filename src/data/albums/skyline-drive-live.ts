@@ -45,7 +45,7 @@ export const tracks: Track[] = [
     title: 'スカイラインドライブ (Skyline Drive) [LIVE]',
     artist: 'Owls in Water',
     duration: '5:01',
-    src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/audio/Track+5+-+(LIVE)+%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%A9%E3%82%A4%E3%83%B3%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96.mp3',
+    src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/audio/Track+5+(LIVE)+%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%A9%E3%82%A4%E3%83%B3%E3%83%89%E3%83%A9%E3%82%A4%E3%83%96.mp3',
     album: 'Skyline Drive (LIVE)'
   },
   {
