@@ -1,7 +1,14 @@
 'use client'
 
 import { createContext, useContext, useState, useRef, useEffect, ReactNode } from 'react'
-import { tracks, Track } from '@/data/albums/skyline-drive'
+import { tracks as studioTracks, Track } from '@/data/albums/skyline-drive'
+import { tracks as liveTracks } from '@/data/albums/skyline-drive-live'
+
+// All available albums
+const albumData: Record<string, Track[]> = {
+  'skyline-drive': studioTracks,
+  'skyline-drive-live': liveTracks,
+}
 
 // GA tracking helper
 const trackEvent = (eventName: string, params: Record<string, any> = {}) => {
@@ -19,7 +26,7 @@ const checkReturningListener = () => {
   
   if (lastVisit) {
     const daysSinceLastVisit = (now - parseInt(lastVisit)) / (1000 * 60 * 60 * 24)
-    return daysSinceLastVisit > 1 // Returning if more than 1 day
+    return daysSinceLastVisit > 1
   }
   return false
 }
@@ -60,6 +67,9 @@ interface AudioContextType {
   playPrev: () => void
   seek: (time: number) => void
   currentTrack: Track
+  currentAlbum: string
+  setCurrentAlbum: (albumSlug: string) => void
+  tracks: Track[]
 }
 
 const AudioContext = createContext<AudioContextType | null>(null)
@@ -71,6 +81,7 @@ export function useAudio() {
 }
 
 export function AudioProvider({ children }: { children: ReactNode }) {
+  const [currentAlbum, setCurrentAlbumState] = useState('skyline-drive')
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -83,17 +94,34 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   // GA tracking state
   const [halfwaySent, setHalfwaySent] = useState(false)
   const [hasTrackedPlay, setHasTrackedPlay] = useState(false)
-  const [sessionTracksCompleted, setSessionTracksCompleted] = useState<Set<number>>(new Set())
+  const [sessionTracksCompleted, setSessionTracksCompleted] = useState<Set<string>>(new Set())
   
   const audioRef = useRef<HTMLAudioElement | null>(null)
   
-  const currentTrack = tracks[currentTrackIndex]
+  const tracks = albumData[currentAlbum] || studioTracks
+  const currentTrack = tracks[currentTrackIndex] || tracks[0]
+  
+  const setCurrentAlbum = (albumSlug: string) => {
+    if (albumData[albumSlug]) {
+      setCurrentAlbumState(albumSlug)
+      setCurrentTrackIndex(0)
+      setIsPlaying(false)
+      setProgress(0)
+      setDuration(0)
+      
+      // Track album switch
+      trackEvent('album_switch', {
+        album: albumSlug,
+        from_album: currentAlbum
+      })
+    }
+  }
   
   // Check for returning listener on mount
   useEffect(() => {
     if (checkReturningListener()) {
       trackEvent('return_listener', {
-        album: 'Skyline Drive'
+        album: currentAlbum
       })
     }
   }, [])
@@ -115,7 +143,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     }
     
     return () => {}
-  }, [currentTrackIndex])
+  }, [currentTrackIndex, currentAlbum])
   
   useEffect(() => {
     if (audioRef.current) {
@@ -139,7 +167,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
           trackEvent('track_50_percent', {
             track_name: currentTrack.title,
             track_number: currentTrackIndex + 1,
-            album: 'Skyline Drive'
+            album: currentAlbum
           })
         }
       }
@@ -150,18 +178,21 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       trackEvent('track_complete', {
         track_name: currentTrack.title,
         track_number: currentTrackIndex + 1,
-        album: 'Skyline Drive'
+        album: currentAlbum
       })
       
-      // Track album completion (last track)
+      // Track album completion
+      const trackKey = `${currentAlbum}-${currentTrackIndex}`
       const newCompleted = new Set(sessionTracksCompleted)
-      newCompleted.add(currentTrackIndex)
+      newCompleted.add(trackKey)
       setSessionTracksCompleted(newCompleted)
       
-      // Check if all tracks have been completed this session
-      if (newCompleted.size === tracks.length) {
+      // Check if all tracks in current album completed
+      const albumTrackKeys = tracks.map((_, i) => `${currentAlbum}-${i}`)
+      const allCompleted = albumTrackKeys.every(key => newCompleted.has(key))
+      if (allCompleted) {
         trackEvent('album_complete', {
-          album: 'Skyline Drive',
+          album: currentAlbum,
           track_count: tracks.length
         })
       }
@@ -169,7 +200,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       // Check if this is the last track (linear album completion)
       if (currentTrackIndex === tracks.length - 1 && !isShuffle) {
         trackEvent('album_complete', {
-          album: 'Skyline Drive',
+          album: currentAlbum,
           completion_type: 'sequential'
         })
       }
@@ -177,11 +208,10 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       if (isRepeat) {
         audio.currentTime = 0
         audio.play()
-        // Track replay
         trackEvent('track_replay', {
           track_name: currentTrack.title,
           track_number: currentTrackIndex + 1,
-          album: 'Skyline Drive'
+          album: currentAlbum
         })
       } else {
         playNext()
@@ -197,7 +227,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       audio.removeEventListener('loadedmetadata', updateProgress)
       audio.removeEventListener('ended', handleEnded)
     }
-  }, [currentTrackIndex, isRepeat, isShuffle, halfwaySent, currentTrack, sessionTracksCompleted])
+  }, [currentTrackIndex, isRepeat, isShuffle, halfwaySent, currentTrack, sessionTracksCompleted, currentAlbum, tracks])
   
   const togglePlay = () => {
     if (!audioRef.current) return
@@ -214,16 +244,15 @@ export function AudioProvider({ children }: { children: ReactNode }) {
         trackEvent('track_play', {
           track_name: currentTrack.title,
           track_number: currentTrackIndex + 1,
-          album: 'Skyline Drive',
+          album: currentAlbum,
           play_count: playCount
         })
         
-        // Track repeat listens (same song played before)
         if (playCount > 1) {
           trackEvent('repeat_track_play', {
             track_name: currentTrack.title,
             track_number: currentTrackIndex + 1,
-            album: 'Skyline Drive',
+            album: currentAlbum,
             total_plays: playCount
           })
         }
@@ -236,32 +265,29 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     setCurrentTrackIndex(index)
     setIsPlaying(true)
     
-    // Track play event
     const track = tracks[index]
     const playCount = recordPlay(track.title)
     
     trackEvent('track_play', {
       track_name: track.title,
       track_number: index + 1,
-      album: 'Skyline Drive',
+      album: currentAlbum,
       play_count: playCount,
       source: 'direct_select'
     })
     
-    // Track repeat listens
     if (playCount > 1) {
       trackEvent('repeat_track_play', {
         track_name: track.title,
         track_number: index + 1,
-        album: 'Skyline Drive',
+        album: currentAlbum,
         total_plays: playCount
       })
     }
     
-    // Track if starting from beginning (playlist start)
     if (index === 0) {
       trackEvent('playlist_start', {
-        album: 'Skyline Drive'
+        album: currentAlbum
       })
     }
     
@@ -314,6 +340,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       playPrev,
       seek,
       currentTrack,
+      currentAlbum,
+      setCurrentAlbum,
+      tracks,
     }}>
       {children}
     </AudioContext.Provider>
