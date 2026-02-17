@@ -12,8 +12,8 @@ export const tracks: Track[] = [
     id: '1',
     title: '光があふれてる (Overflowing Light)',
     artist: 'Owls in Water',
-    duration: '3:04',
-    src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/audio/Track%201%20-%20%E5%85%89%E3%81%8C%E3%81%82%E3%81%B5%E3%82%8C%E3%81%A6%E3%82%8B%20-%20Overflowing%20Light.mp3',
+    duration: '3:28',
+    src: 'https://owlsinwater-media.s3.us-east-2.amazonaws.com/audio/Track+1+-+(LIVE)+%E5%85%89%E3%81%8C%E3%81%82%E3%81%B5%E3%82%8C%E3%81%A6%E3%82%8B.mp3',
     album: 'スカイラインドライブ'
   },
   {
